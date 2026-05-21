@@ -3,163 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StartUp Pack MA - الحزمة المتكاملة لرواد الأعمال</title>
+    <title>Luxe & Style - متجر الأحذية والصنادل الفاخرة</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <style>
-        body { font-family: 'Cairo', sans-serif; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0f17;
+            color: #f3f4f6;
+        }
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        body.modal-active {
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="antialiased">
 
-    <div class="bg-indigo-600 text-white text-center py-2 text-sm font-bold">
-        🔥 عرض محدود: احصل على الحزمة كاملة فقط بـ 30 درهم بدل 70 درهم!
+    <div class="bg-gradient-to-r from-blue-600 to-emerald-500 text-white text-center py-2 text-sm font-bold shadow-md">
+        ✨ توصيل سريع لجميع المدن المغربية والدفع عند الاستلام!
     </div>
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-indigo-600 tracking-wide">StartUp Pack MA</h1>
-            <a href="#order-form" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition">
-                اطلب الآن
-            </a>
+    <header class="bg-[#161c26] border-b border-[#243145] sticky top-0 z-40 shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center max-w-6xl">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">👡</span>
+                <h1 class="text-xl font-extrabold text-white tracking-wide bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">LUXE & STYLE</h1>
+            </div>
+            <div class="bg-[#1f293d] border border-[#243145] px-3 py-1 rounded-full text-xs text-amber-400 font-bold">
+                🟢 متوفر الآن
+            </div>
         </div>
     </header>
 
-    <section class="container mx-auto px-4 py-12 text-center max-w-3xl">
-        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full uppercase">أكبر تجمع للموارد الرقمية في المغرب</span>
-        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mt-4 leading-tight">
-            أطلق مشروعك الرقمي اليوم مع <span class="text-indigo-600">85 مليون مورد</span> جاهز للاستخدام!
-        </h2>
-        <p class="text-gray-600 mt-4 text-base md:text-lg leading-relaxed">
-            قوالب Canva، برمجيات، كورسات تجارة إلكترونية، وتصاميم حصرية احترافية مجتمعة في مكان واحد لتوفير آلاف الساعات والدرواهم.
-        </p>
+    <section class="text-center py-12 px-4 max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">تألق بأحدث تشكيلات <span class="text-blue-400">الأحذية والصنادل</span> الصيفية</h2>
+        <p class="text-gray-400 mt-3 text-sm md:text-base">اختر حذاءك المفضل الآن، املأ معلوماتك، واستلم طلبك عند باب منزلك في أقل من 48 ساعة.</p>
+    </section>
+
+    <main class="container mx-auto px-4 pb-16 max-w-6xl">
+        <div id="storefrontGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="col-span-full text-center py-12 text-gray-400 font-bold">جاري تحميل تشكيلة الأحذية الفاخرة...</div>
+        </div>
+    </main>
+
+    <div id="orderModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-black opacity-80 backdrop-blur-sm" onclick="toggleModal()"></div>
         
-        <div class="mt-8 bg-gray-200 rounded-2xl aspect-video w-full flex items-center justify-center border-4 border-white shadow-lg overflow-hidden">
-            <span class="text-gray-500 font-bold">[ فيديو إعلاني للمنتج أو صورة الحزمة الجذابة ]</span>
-        </div>
-    </section>
-
-    <section class="bg-white py-12 border-t border-b border-gray-100">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">ماذا ستجد داخل الحزمة؟</h3>
+        <div class="modal-container bg-[#161c26] w-full max-w-md mx-auto rounded-2xl shadow-2xl z-50 overflow-y-auto border border-[#243145] m-4 max-h-[90vh]">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
-                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">✨</div>
+            <div class="modal-content py-6 text-right px-6">
+                <div class="flex justify-between items-center pb-4 border-b border-[#243145]">
+                    <p class="text-lg font-bold text-white" id="modalTitle">تأكيد الطلب</p>
+                    <div class="modal-close cursor-pointer z-50 text-gray-400 hover:text-white text-2xl" onclick="toggleModal()">&times;</div>
+                </div>
+
+                <div class="flex items-center gap-4 py-4 bg-[#1f293d] rounded-xl my-4 px-4 border border-dashed border-[#243145]">
+                    <img id="modalProductImg" src="" alt="Product" class="w-20 h-20 object-cover rounded-lg bg-white border border-[#243145]">
                     <div>
-                        <h4 class="font-bold text-gray-900">قوالب Canva احترافية</h4>
-                        <p class="text-sm text-gray-600 mt-1">آلاف تصاميم السوشيال ميديا والإعلانات قابلة للتعديل بضغطة زر.</p>
+                        <h4 id="modalProductName" class="font-bold text-white text-base">اسم المنتج</h4>
+                        <p class="text-sm text-gray-400 mt-1">الثمن: <span id="modalProductPrice" class="text-emerald-400 font-extrabold text-lg">0.00</span> <span class="text-xs text-emerald-400">DH</span></p>
                     </div>
                 </div>
-                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
-                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">📚</div>
+
+                <form id="customerOrderForm" class="space-y-4">
+                    <input type="hidden" id="selectedProductId">
+                    
                     <div>
-                        <h4 class="font-bold text-gray-900">كورسات تجارة إلكترونية</h4>
-                        <p class="text-sm text-gray-600 mt-1">دورات حصرية تشرح لك كيف تبدأ وتبيع في السوق المغربي والعربي.</p>
+                        <label class="block text-sm font-bold text-gray-400 mb-1">الاسم الكامل :</label>
+                        <input type="text" id="custName" required class="w-full bg-[#1f293d] border border-[#243145] rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition text-sm" placeholder="محمد العلمي">
                     </div>
-                </div>
-                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
-                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">🛠️</div>
+
                     <div>
-                        <h4 class="font-bold text-gray-900">برامج وأدوات مدفوعة</h4>
-                        <p class="text-sm text-gray-600 mt-1">أدوات أساسية يحتاجها كل مسوق ومطور ويب لتسريع عمله.</p>
+                        <label class="block text-sm font-bold text-gray-400 mb-1">رقم الهاتف :</label>
+                        <input type="tel" id="custPhone" required class="w-full bg-[#1f293d] border border-[#243145] rounded-xl px-4 py-3 text-white text-left focus:border-blue-500 outline-none transition text-sm" placeholder="06XXXXXXXX" dir="ltr">
                     </div>
-                </div>
-                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
-                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">🚀</div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-400 mb-1">المقاس (Taille) :</label>
+                            <select id="custSize" required class="w-full bg-[#1f293d] border border-[#243145] rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none transition text-sm">
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-400 mb-1">الكمية :</label>
+                            <input type="number" id="custQty" value="1" min="1" required class="w-full bg-[#1f293d] border border-[#243145] rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition text-sm text-center">
+                        </div>
+                    </div>
+
                     <div>
-                        <h4 class="font-bold text-gray-900">تحديثات مدى الحياة</h4>
-                        <p class="text-sm text-gray-600 mt-1">تدفع مرة واحدة فقط، وتحصل على كل الموارد الجديدة مجاناً دائماً.</p>
+                        <label class="block text-sm font-bold text-gray-400 mb-1">المدينة والعنوان بالكامل :</label>
+                        <input type="text" id="custAddress" required class="w-full bg-[#1f293d] border border-[#243145] rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition text-sm" placeholder="مثال: مراكش، حي جليز، زنقة رقم 4">
                     </div>
-                </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl shadow-lg text-base transition transform hover:-translate-y-0.5">
+                            🛍️ تأكيد الشراء - الدفع عند الاستلام
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="order-form" class="container mx-auto px-4 py-16 max-w-lg">
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8">
-            <h3 class="text-2xl font-bold text-center text-gray-900">استمارة الطلب السريع</h3>
-            <p class="text-center text-sm text-gray-500 mt-1">المرجو ملء الخانات أسفله لتلقي رابط الحزمة فوراً عبر الواتساب والإيميل</p>
-            
-            <div class="flex justify-center items-center gap-4 my-6 bg-indigo-50 py-3 rounded-xl">
-                <div class="text-center">
-                    <span class="text-xs text-gray-400 line-through block">70 درهم</span>
-                    <span class="text-2xl font-bold text-indigo-600">30 درهم فقط!</span>
-                </div>
-            </div>
-
-            <form id="purchaseForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">الاسم الكامل</label>
-                    <input type="text" id="clientName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="محمد العلمي">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف (واتساب)</label>
-                    <input type="tel" id="clientPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="06XXXXXXXX" dir="ltr">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">البريد الإلكتروني</label>
-                    <input type="email" id="clientEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="name@email.com" dir="ltr">
-                </div>
-
-                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-lg shadow-lg text-lg transition transform hover:-translate-y-0.5">
-                    اضغط هنا للحصول على الحزمة 🚀
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-gray-400 text-center py-6 text-xs">
-        <p>© 2026 StartUp Pack MA. جميع الحقوق محفوظة.</p>
+    <footer class="bg-[#161c26] text-gray-500 text-center py-6 text-xs border-t border-[#243145]">
+        <p>© 2026 LUXE & STYLE. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <script type="module">
-        // تضمين حزم فايبربيس الأساسية
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        // إعدادات Firebase الخاصة بمشروعك (ضع معلومات مشروعك الحالية هنا)
+    <script>
+        // إعدادات Firebase الخاصة بك (متطابقة تماماً مع لوحة تحكمك الحالية)
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyAn3cl74J4CY7Qzb8tF_KlercWOs0BGSBc",
+            authDomain: "stock-166df.firebaseapp.com",
+            databaseURL: "https://stock-166df-default-rtdb.firebaseio.com",
+            projectId: "stock-166df",
+            storageBucket: "stock-166df.appspot.com",
+            messagingSenderId: "1071318301341",
+            appId: "1:1071318301341:web:e1a512beec2a20cf3274"
         };
 
-        // تهيئة التطبيق وقاعدة البيانات
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        // الاستماع لإرسال الاستمارة
-        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+        let localProducts = [];
+
+        // جلب المنتجات من فرع الـ products وعرضها فوراً في المتجر للزبون
+        db.ref("products").on("value", snapshot => {
+            const data = snapshot.val() || [];
+            localProducts = data.filter(p => p !== null && p !== undefined);
+            renderStorefront();
+        });
+
+        function renderStorefront() {
+            const grid = document.getElementById("storefrontGrid");
+            let html = "";
+
+            if (localProducts.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">لا توجد منتجات معروضة حالياً.</div>`;
+                return;
+            }
+
+            localProducts.forEach(p => {
+                // عرض السلعة للزبون فقط إذا كان هناك مخزون متاح منها
+                if (p.qty > 0) {
+                    // نفترض أن هامش البيع التلقائي يزيد عن سعر التكلفة بـ 45 درهم لتبسيط العرض الأولي للزبون
+                    let sellingPrice = p.pu + 45; 
+
+                    html += `
+                    <div class="bg-[#161c26] border border-[#243145] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition flex flex-col">
+                        <div class="p-3 bg-white flex items-center justify-center aspect-square overflow-hidden relative">
+                            <img src="images/${p.id}.png" alt="${p.name}" class="object-contain h-full w-full transition transform hover:scale-105" onerror="this.src='https://placehold.co/300x300/161c26/FFF?text=Shoes'">
+                            <span class="absolute top-2 right-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">🔥 الأكثر طلباً</span>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow text-right">
+                            <h3 class="font-bold text-white text-base line-clamp-1">${p.name}</h3>
+                            <div class="flex items-baseline gap-2 mt-2">
+                                <span class="text-xl font-extrabold text-emerald-400">${sellingPrice.toFixed(2)} DH</span>
+                                <span class="text-xs text-gray-500 line-through">${(sellingPrice + 60).toFixed(2)} DH</span>
+                            </div>
+                            <button onclick="openOrderModal('${p.id}', '${p.name}', ${sellingPrice})" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-xl mt-4 transition flex items-center justify-center gap-2">
+                                <span>اضغط هنا للطلب</span> 🛒
+                            </button>
+                        </div>
+                    </div>`;
+                }
+            });
+
+            grid.innerHTML = html || `<div class="col-span-full text-center py-12 text-gray-500">نفذت جميع الكميات، سنعود قريباً!</div>`;
+        }
+
+        // فتح نافذة الطلب وتعبئة بيانات المنتج المختار تلقائياً
+        function openOrderModal(id, name, price) {
+            document.getElementById("selectedProductId").value = id;
+            document.getElementById("modalProductName").innerText = name;
+            document.getElementById("modalProductPrice").innerText = price.toFixed(2);
+            document.getElementById("modalProductImg").src = `images/${id}.png`;
+            toggleModal();
+        }
+
+        function toggleModal() {
+            const body = document.querySelector('body');
+            const modal = document.getElementById('orderModal');
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+            body.classList.toggle('modal-active');
+            
+            // إعادة ضبط الاستمارة عند الإغلاق
+            if(modal.classList.contains('opacity-0')) {
+                document.getElementById('customerOrderForm').reset();
+            }
+        }
+
+        // معالجة وإرسال استمارة طلب الزبون لـ Firebase
+        document.getElementById("customerOrderForm").addEventListener("submit", function(e) {
             e.preventDefault();
 
-            // جمع بيانات الزبون
-            const orderData = {
-                name: document.getElementById('clientName').value,
-                phone: document.getElementById('clientPhone').value,
-                email: document.getElementById('clientEmail').value,
-                product: "StartUp Pack MA",
-                price: "30 MAD",
-                date: new Date().toISOString(),
-                status: "جديد" // لتصنيف الطلب في لوحة تحكمك لاحقاً
+            const prodId = document.getElementById("selectedProductId").value;
+            const targetQty = Number(document.getElementById("custQty").value);
+            
+            // التحقق من تواجد السلعة الفعلي في المخزن ومقارنتها بالطلب
+            let originalProd = localProducts.find(x => x && x.id == prodId);
+            if (!originalProd) return alert("المنتج غير موجود حالياً!");
+            if (targetQty > originalProd.qty) {
+                return alert(`عذراً! الكمية المتوفرة في المخزن حالياً هي ${originalProd.qty} قطع فقط.`);
+            }
+
+            const finalPrice = Number(document.getElementById("modalProductPrice").innerText);
+
+            // إنشاء كائن الطلب الموجه للـ Firebase
+            const newOrder = {
+                date: new Date().toISOString().split("T")[0],
+                vendeur: "جديد", // لتحديد أن الطلب خارجي وغير مؤكد بعد
+                productName: originalProd.name,
+                productId: prodId,
+                qty: targetQty,
+                ca: finalPrice * targetQty,
+                profit: (finalPrice - originalProd.pu) * targetQty,
+                customerInfo: {
+                    name: document.getElementById("custName").value.trim(),
+                    phone: document.getElementById("custPhone").value.trim(),
+                    size: document.getElementById("custSize").value,
+                    address: document.getElementById("custAddress").value.trim()
+                }
             };
 
-            // إرسال البيانات لفرع الأوردرات في الفايربيس (orders)
-            push(ref(db, 'orders'), orderData)
-                .then(() => {
-                    alert('شكراً لك! تم تسجيل طلبك بنجاح، سنتواصل معك فوراً لتسليمك الحزمة.');
-                    document.getElementById('purchaseForm').reset();
-                })
-                .catch((error) => {
-                    alert('حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مجدداً.');
-                    console.error(error);
+            // 1. خصم وتحديث الكمية فوراً في المخزن لتفادي تضارب الطلبات
+            originalProd.qty -= targetQty;
+
+            db.ref("products").set(localProducts).then(() => {
+                // 2. دفع بيانات الطلب لفرع المبيعات/الطلبات في السيرفر لتوثيقه
+                db.ref("sales").push(newOrder).then(() => {
+                    alert("🎉 شكراً لك! تم تسجيل طلبك بنجاح. سيتصل بك فريق العمل فوراً للتأكيد والشحن.");
+                    toggleModal();
                 });
+            });
         });
     </script>
 </body>
