@@ -1,529 +1,166 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Ventes & Stock</title>
+    <title>StartUp Pack MA - الحزمة المتكاملة لرواد الأعمال</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #2980b9;
-            --success-color: #27ae60;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --bg-color: #f4f6f7;
-            --text-color: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1250px;
-            margin: 0 auto;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        h1, h2, h3 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        /* Tableau de bord - Statistiques */
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .stat-box {
-            padding: 15px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-        }
-        .stat-ca { background-color: var(--accent-color); }
-        .stat-cost { background-color: #7f8c8d; }
-        .stat-profit { background-color: var(--success-color); }
-        .stat-box div { font-size: 24px; margin-top: 5px; }
-
-        /* Disposition de l'application */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 38% 62%;
-            gap: 20px;
-        }
-
-        @media (max-width: 950px) {
-            .main-layout { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-success { background-color: var(--success-color); }
-        .btn-success:hover { background-color: #219150; }
-        .btn-primary { background-color: var(--accent-color); }
-        .btn-primary:hover { background-color: #1a6699; }
-        .btn-reset { background-color: #95a5a6; padding: 5px 10px; font-size: 12px; width: auto; margin-top: 5px; display: inline-block;}
-        .btn-backup { background-color: var(--warning-color); margin-bottom: 10px; }
-        .btn-backup:hover { background-color: #d35400; }
-        .btn-restore { background-color: #8e44ad; }
-        .btn-restore:hover { background-color: #732d91; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 13px;
-        }
-
-        th, td {
-            padding: 10px 6px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        th {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        tr:hover { background-color: #f8fafc; }
-
-        .delete-btn {
-            background-color: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .badge {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .badge-danger { background-color: #fde8e8; color: #c81e1e; }
-        .badge-success { background-color: #def7ec; color: #03543f; }
-        .badge-warning { background-color: #fef08a; color: #854d0e; }
-
-        .backup-section {
-            background-color: #f1f5f9;
-            border: 2px dashed #cbd5e1;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-        
-        #loadingOverlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.9);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 20px; font-weight: bold;
-            color: var(--primary-color);
-            z-index: 9999;
-        }
+        body { font-family: 'Cairo', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
 
-<div id="loadingOverlay">Connexion à la base de données...</div>
+    <div class="bg-indigo-600 text-white text-center py-2 text-sm font-bold">
+        🔥 عرض محدود: احصل على الحزمة كاملة فقط بـ 30 درهم بدل 70 درهم!
+    </div>
 
-<div id="mainApp">
-    <div class="container">
-        <h1>Système du Suivi des Ventes & Gestion de Stock</h1>
-
-        <div class="dashboard-stats">
-            <div class="stat-box stat-ca">
-                Chiffre d'Affaires (CA)
-                <div id="totalCA">0.00</div>
-            </div>
-            <div class="stat-box stat-cost">
-                Coût de Revient Total
-                <div id="totalCost">0.00</div>
-            </div>
-            <div class="stat-box stat-profit">
-                Bénéfice Net
-                <div id="totalProfit">0.00</div>
-            </div>
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-indigo-600 tracking-wide">StartUp Pack MA</h1>
+            <a href="#order-form" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition">
+                اطلب الآن
+            </a>
         </div>
+    </header>
 
-        <div class="main-layout">
+    <section class="container mx-auto px-4 py-12 text-center max-w-3xl">
+        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full uppercase">أكبر تجمع للموارد الرقمية في المغرب</span>
+        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mt-4 leading-tight">
+            أطلق مشروعك الرقمي اليوم مع <span class="text-indigo-600">85 مليون مورد</span> جاهز للاستخدام!
+        </h2>
+        <p class="text-gray-600 mt-4 text-base md:text-lg leading-relaxed">
+            قوالب Canva، برمجيات، كورسات تجارة إلكترونية، وتصاميم حصرية احترافية مجتمعة في مكان واحد لتوفير آلاف الساعات والدرواهم.
+        </p>
+        
+        <div class="mt-8 bg-gray-200 rounded-2xl aspect-video w-full flex items-center justify-center border-4 border-white shadow-lg overflow-hidden">
+            <span class="text-gray-500 font-bold">[ فيديو إعلاني للمنتج أو صورة الحزمة الجذابة ]</span>
+        </div>
+    </section>
 
-            <div>
-                <div class="card">
-                    <h3>Enregistrer une Nouvelle Vente</h3>
-                    <form id="salesForm">
-                        <div class="form-group">
-                            <label for="saleDate">Date de Vente :</label>
-                            <input type="date" id="saleDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="saleProductSelect">Sélectionner l'article :</label>
-                            <select id="saleProductSelect" required onchange="handleProductChange()">
-                                <option value="">-- Choisir un produit disponible --</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="costPrice">Coût de Revient Unitaire (PU - Auto) :</label>
-                            <input type="number" id="costPrice" min="0" step="0.01" placeholder="Sélectionnez un produit" readonly style="background-color: #e2e8f0; font-weight: bold;">
-                        </div>
-                        <div class="form-group">
-                            <label for="salePrice">Prix de Vente Unitaire Réel :</label>
-                            <input type="number" id="salePrice" min="0" step="0.01" placeholder="Prix vendu aujourd'hui" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="saleQty">Quantité Vendue (Q) :</label>
-                            <input type="number" id="saleQty" min="1" placeholder="Nombre de pièces vendues" required>
-                        </div>
-                        <button type="submit" class="btn-success">Valider la vente et déduire du stock</button>
-                    </form>
+    <section class="bg-white py-12 border-t border-b border-gray-100">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">ماذا ستجد داخل الحزمة؟</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
+                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">✨</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">قوالب Canva احترافية</h4>
+                        <p class="text-sm text-gray-600 mt-1">آلاف تصاميم السوشيال ميديا والإعلانات قابلة للتعديل بضغطة زر.</p>
+                    </div>
                 </div>
-
-                <div class="card" style="overflow-x: auto;">
-                    <h3>État Actuel du Stock (Q & PU)</h3>
-                    <table id="inventoryTable">
-                        <thead>
-                            <tr>
-                                <th>Article / Marque</th>
-                                <th>Prix d'achat (PU)</th>
-                                <th>Disponible (Q)</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <center><button class="btn-reset" onclick="resetInventoryToDefault()">Réinitialiser au Stock Initial</button></center>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
+                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">📚</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">كورسات تجارة إلكترونية</h4>
+                        <p class="text-sm text-gray-600 mt-1">دورات حصرية تشرح لك كيف تبدأ وتبيع في السوق المغربي والعربي.</p>
+                    </div>
                 </div>
-
-                <div class="card backup-section">
-                    <h3>Centre de Sauvegarde des Données</h3>
-                    <p style="font-size: 13px; color: #64748b; margin-top: -10px; text-align: center;">Téléchargez régulièrement une copie pour éviter toute perte de données.</p>
-                    <button class="btn-backup" onclick="exportDataBackup()">📥 Télécharger Sauvegarde (Fichier JSON)</button>
-
-                    <div style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 10px;">
-                        <label style="margin-bottom: 8px;"><b>Restaurer depuis une sauvegarde précédente :</b></label>
-                        <input type="file" id="importFile" accept=".json" style="padding: 5px; font-size: 13px; margin-bottom: 8px;">
-                        <button class="btn-restore" onclick="importDataBackup()">📤 Restaurer les Données</button>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
+                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">🛠️</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">برامج وأدوات مدفوعة</h4>
+                        <p class="text-sm text-gray-600 mt-1">أدوات أساسية يحتاجها كل مسوق ومطور ويب لتسريع عمله.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50">
+                    <div class="bg-indigo-100 p-3 rounded-lg text-indigo-600 font-bold">🚀</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">تحديثات مدى الحياة</h4>
+                        <p class="text-sm text-gray-600 mt-1">تدفع مرة واحدة فقط، وتحصل على كل الموارد الجديدة مجاناً دائماً.</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div>
-                <div class="card" style="overflow-x: auto; min-height: 550px;">
-                    <h3>Historique Détaillé des Ventes Journalières</h3>
-                    <table id="salesTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Nom du Produit</th>
-                                <th>Quantité</th>
-                                <th>Coût Total</th>
-                                <th>Vente Totale (CA)</th>
-                                <th>Bénéfice Net</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+    <section id="order-form" class="container mx-auto px-4 py-16 max-w-lg">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-center text-gray-900">استمارة الطلب السريع</h3>
+            <p class="text-center text-sm text-gray-500 mt-1">المرجو ملء الخانات أسفله لتلقي رابط الحزمة فوراً عبر الواتساب والإيميل</p>
+            
+            <div class="flex justify-center items-center gap-4 my-6 bg-indigo-50 py-3 rounded-xl">
+                <div class="text-center">
+                    <span class="text-xs text-gray-400 line-through block">70 درهم</span>
+                    <span class="text-2xl font-bold text-indigo-600">30 درهم فقط!</span>
                 </div>
             </div>
 
+            <form id="purchaseForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">الاسم الكامل</label>
+                    <input type="text" id="clientName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="محمد العلمي">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف (واتساب)</label>
+                    <input type="tel" id="clientPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="06XXXXXXXX" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">البريد الإلكتروني</label>
+                    <input type="email" id="clientEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="name@email.com" dir="ltr">
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-lg shadow-lg text-lg transition transform hover:-translate-y-0.5">
+                    اضغط هنا للحصول على الحزمة 🚀
+                </button>
+            </form>
         </div>
-    </div>
-</div>
+    </section>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <footer class="bg-gray-900 text-gray-400 text-center py-6 text-xs">
+        <p>© 2026 StartUp Pack MA. جميع الحقوق محفوظة.</p>
+    </footer>
 
-<script>
-    // 🔗 الأكواد الخاصة بمشروعك المستخرجة من صورك
-    const firebaseConfig = {
-        apiKey: "AIzaSyAn3cl74J4CY7Qzb8tF_KlercWOs0BGSBc",
-        authDomain: "stock-166df.firebaseapp.com",
-        databaseURL: "https://stock-166df-default-rtdb.firebaseio.com",
-        projectId: "stock-166df",
-        storageBucket: "stock-166df.appspot.com",
-        messagingSenderId: "1071318301341",
-        appId: "1:1071318301341:web:e1a512beec2a20cf3274"
-    };
+    <script type="module">
+        // تضمين حزم فايبربيس الأساسية
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    const defaultProducts = [
-        { id: "1", name: 'sneakers midium quality', qty: 24, pu: 75 },
-        { id: "2", name: 'sneakers Low quality', qty: 20, pu: 62 },
-        { id: "3", name: 'sandals " NIKE "', qty: 30, pu: 38 },
-        { id: "4", name: 'sandals girl (1)', qty: 24, pu: 16 },
-        { id: "5", name: 'sandals girl (2)', qty: 24, pu: 16 },
-        { id: "6", name: 'flip-flops "easy to go"', qty: 24, pu: 45 },
-        { id: "7", name: 'sneakers for kids', qty: 9, pu: 65 },
-        { id: "8", name: 'sandals " LOULUEN "', qty: 24, pu: 80 },
-        { id: "9", name: 'sandals " MIKA R&B "', qty: 10, pu: 40 },
-        { id: "10", name: 'SABO for Men', qty: 24, pu: 30 },
-        { id: "11", name: 'Sabo for girls', qty: 30, pu: 24 },
-        { id: "12", name: 'sandals " BZIM Mtarzin"', qty: 24, pu: 50 },
-        { id: "13", name: 'sandals " Jeld "', qty: 24, pu: 95 },
-        { id: "14", name: 'flip-flops " LOULUEN "', qty: 24, pu: 45 },
-        { id: "15", name: 'sandals " Black Gold Brown "', qty: 10, pu: 45 },
-        { id: "16", name: 'Sandals Free style', qty: 24, pu: 60 },
-        { id: "17", name: 'Sandals Proof', qty: 20, pu: 63 }
-    ];
-
-    let products = [];
-    let sales = [];
-
-    document.getElementById('saleDate').valueAsDate = new Date();
-
-    // المزامنة الحية المباشرة مع السحابة لجميع المستخدمين في نفس الوقت
-    db.ref().on('value', (snapshot) => {
-        const data = snapshot.val();
-        
-        if (data) {
-            products = data.products || [...defaultProducts];
-            sales = data.sales ? Object.keys(data.sales).map(key => ({...data.sales[key], firebaseKey: key})) : [];
-        } else {
-            products = [...defaultProducts];
-            sales = [];
-            saveToFirebase();
-        }
-
-        document.getElementById('loadingOverlay').style.display = 'none';
-        updateDashboardView();
-    });
-
-    function saveToFirebase() {
-        db.ref('products').set(products);
-    }
-
-    function updateDashboardView() {
-        const select = document.getElementById('saleProductSelect');
-        const previousSelection = select.value;
-        select.innerHTML = '<option value="">-- Choisir un produit disponible --</option>';
-
-        products.forEach(p => {
-            const isOutOfStock = p.qty <= 0 ? 'disabled' : '';
-            select.innerHTML += `<option value="${p.id}" ${isOutOfStock}>${p.name} (Dispo: ${p.qty})</option>`;
-        });
-        select.value = previousSelection;
-
-        const invBody = document.querySelector('#inventoryTable tbody');
-        invBody.innerHTML = '';
-        products.forEach(p => {
-            let badgeClass = 'badge badge-success';
-            if (p.qty === 0) badgeClass = 'badge badge-danger';
-            else if (p.qty <= 5) badgeClass = 'badge badge-warning';
-
-            invBody.innerHTML += `
-                <tr>
-                    <td style="text-align: left; font-weight: 500;">${p.name}</td>
-                    <td style="font-weight: bold; color: #7f8c8d;">${p.pu}</td>
-                    <td><span class="${badgeClass}">${p.qty} pcs</span></td>
-                </tr>
-            `;
-        });
-
-        const salesBody = document.querySelector('#salesTable tbody');
-        salesBody.innerHTML = '';
-
-        let globalCA = 0;
-        let globalCost = 0;
-        let globalProfit = 0;
-
-        sales.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        sales.forEach((s) => {
-            globalCA += s.totalCA;
-            globalCost += s.totalCost;
-            globalProfit += s.profit;
-
-            salesBody.innerHTML += `
-                <tr>
-                    <td>${s.date}</td>
-                    <td style="text-align: left; font-weight: 600;">${s.productName}</td>
-                    <td>${s.quantity}</td>
-                    <td>${s.totalCost.toFixed(2)}</td>
-                    <td style="color: var(--accent-color); font-weight: bold;">${s.totalCA.toFixed(2)}</td>
-                    <td style="color: var(--success-color); font-weight: bold;">${s.profit.toFixed(2)}</td>
-                    <td><button class="delete-btn" onclick="deleteSale('${s.firebaseKey}', '${s.productName}', ${s.quantity})">Supprimer</button></td>
-                </tr>
-            `;
-        });
-
-        document.getElementById('totalCA').innerText = globalCA.toFixed(2);
-        document.getElementById('totalCost').innerText = globalCost.toFixed(2);
-        document.getElementById('totalProfit').innerText = globalProfit.toFixed(2);
-    }
-
-    function handleProductChange() {
-        const productId = document.getElementById('saleProductSelect').value;
-        const costInput = document.getElementById('costPrice');
-
-        if (productId) {
-            const product = products.find(p => p.id === productId);
-            costInput.value = product.pu;
-        } else {
-            costInput.value = '';
-        }
-        document.getElementById('salePrice').value = '';
-        document.getElementById('saleQty').value = '';
-    }
-
-    document.getElementById('salesForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const date = document.getElementById('saleDate').value;
-        const productId = document.getElementById('saleProductSelect').value;
-        const costPrice = parseFloat(document.getElementById('costPrice').value);
-        const salePrice = parseFloat(document.getElementById('salePrice').value);
-        const quantity = parseInt(document.getElementById('saleQty').value);
-
-        const product = products.find(p => p.id === productId);
-
-        if (!product) return;
-
-        if (product.qty < quantity) {
-            alert(`Désolé ! Quantité insuffisante. Il ne reste que ${product.qty} pièces en stock.`);
-            return;
-        }
-
-        const totalCost = costPrice * quantity;
-        const totalCA = salePrice * quantity;
-        const profit = totalCA - totalCost;
-
-        product.qty -= quantity;
-
-        const newSale = { date, productName: product.name, quantity, totalCost, totalCA, profit };
-        
-        db.ref('sales').push(newSale);
-        saveToFirebase();
-
-        document.getElementById('costPrice').value = '';
-        document.getElementById('salePrice').value = '';
-        document.getElementById('saleQty').value = '';
-        document.getElementById('saleProductSelect').value = '';
-    });
-
-    function deleteSale(firebaseKey, productName, quantity) {
-        if (confirm("En supprimant cette vente, les articles seront rajoutés au stock automatiquement. Confirmer ?")) {
-            const prod = products.find(p => p.name === productName);
-            if (prod) {
-                prod.qty += quantity;
-            }
-            db.ref('sales/' + firebaseKey).remove();
-            saveToFirebase();
-        }
-    }
-
-    function resetInventoryToDefault() {
-        if(confirm("Êtes-vous sûr de vouloir réinitialiser le stock aux valeurs initiales ?")) {
-            products = JSON.parse(JSON.stringify(defaultProducts));
-            db.ref('sales').remove();
-            saveToFirebase();
-        }
-    }
-
-    function exportDataBackup() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ products, sales }));
-        const downloadAnchor = document.createElement('a');
-        const today = new Date().toISOString().slice(0, 10);
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", `Backup_Stock_Ayoub_${today}.json`);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-    }
-
-    function importDataBackup() {
-        const fileInput = document.getElementById('importFile');
-        if (fileInput.files.length === 0) {
-            alert("Veuillez sélectionner un fichier de sauvegarde (.json) d'abord !");
-            return;
-        }
-
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            try {
-                const importedData = JSON.parse(e.target.result);
-                if (importedData.products && importedData.sales) {
-                    if (confirm("Voulez-vous écraser les données actuelles et restaurer cette sauvegarde ?")) {
-                        products = importedData.products;
-                        
-                        const salesObj = {};
-                        importedData.sales.forEach((s, idx) => {
-                            salesObj['imported_' + idx] = s;
-                        });
-                        
-                        db.ref('products').set(products);
-                        db.ref('sales').set(salesObj);
-                        alert("Données restaurées avec succès ! 🎉");
-                    }
-                } else {
-                    alert("Fichier invalide.");
-                }
-            } catch (err) {
-                alert("Erreur lors de la lecture du fichier.");
-            }
+        // إعدادات Firebase الخاصة بمشروعك (ضع معلومات مشروعك الحالية هنا)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
-        reader.readAsText(file);
-    }
-</script>
 
+        // تهيئة التطبيق وقاعدة البيانات
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // الاستماع لإرسال الاستمارة
+        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // جمع بيانات الزبون
+            const orderData = {
+                name: document.getElementById('clientName').value,
+                phone: document.getElementById('clientPhone').value,
+                email: document.getElementById('clientEmail').value,
+                product: "StartUp Pack MA",
+                price: "30 MAD",
+                date: new Date().toISOString(),
+                status: "جديد" // لتصنيف الطلب في لوحة تحكمك لاحقاً
+            };
+
+            // إرسال البيانات لفرع الأوردرات في الفايربيس (orders)
+            push(ref(db, 'orders'), orderData)
+                .then(() => {
+                    alert('شكراً لك! تم تسجيل طلبك بنجاح، سنتواصل معك فوراً لتسليمك الحزمة.');
+                    document.getElementById('purchaseForm').reset();
+                })
+                .catch((error) => {
+                    alert('حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مجدداً.');
+                    console.error(error);
+                });
+        });
+    </script>
 </body>
 </html>
